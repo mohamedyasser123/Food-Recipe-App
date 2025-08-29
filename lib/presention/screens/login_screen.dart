@@ -57,69 +57,99 @@ final TextEditingController passwordController=TextEditingController();
               size: AppButtonSize.big,
             ),
             16.h.heightSizedBox,
-            _dividerWithText("Or Sign in With"),
+            DividerWithText(text: "Or Sign in With",),
             20.h.heightSizedBox,
-            socialWidget(),
+            SocialWidget(),
             48.h.heightSizedBox,
-            signUpWidget()
+            SignUpWidget(onTab: ()=>Navigator.pushNamed(
+              context,
+              AppRoutes.createAccountScreen,
+            ),),
           ],
         ),
       ),
     );
   }
-   Widget _dividerWithText(String text) {
-     return Padding(
-       padding:EdgeInsets.symmetric(horizontal: 32.w),
-       child: Row(
-         children: [
-           Expanded(child: Divider(
-               color: AppColors.gray4,
-           )),
-           Padding(
-             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-             child: Text(text, style:AppTextStyle.smallerBold.copyWith(color: AppColors.gray4)),
-           ),
-           Expanded(child: Divider(color: AppColors.gray4)),
-         ],
-       ),
-     );
-   }
-   Widget socialWidget(){
+}
+class DividerWithText extends StatelessWidget {
+  final String text;
+  const DividerWithText({super.key, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 32.w),
+      child: Row(
+        children: [
+          const Expanded(child: Divider(color: AppColors.gray4)),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Text(
+              text,
+              style: AppTextStyle.smallerBold.copyWith(color: AppColors.gray4),
+            ),
+          ),
+          const Expanded(child: Divider(color: AppColors.gray4)),
+        ],
+      ),
+    );
+  }
+}
+class SocialWidget extends StatelessWidget {
+  const SocialWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      spacing: 24.w,
       children: [
         Container(
           padding: EdgeInsets.all(10.r),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.r),
-
-              image: DecorationImage(image: AssetImage(AppImages.google))
+            image: const DecorationImage(
+              image: AssetImage(AppImages.google),
+            ),
           ),
         ),
+        SizedBox(width: 24.w),
         Container(
           padding: EdgeInsets.all(10.r),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.r),
-              image: DecorationImage(image: AssetImage(AppImages.facebook))
+            borderRadius: BorderRadius.circular(10.r),
+            image: const DecorationImage(
+              image: AssetImage(AppImages.facebook),
+            ),
           ),
-        )
+        ),
       ],
     );
-   }
-   Widget signUpWidget(){
+  }
+}
+class SignUpWidget extends StatelessWidget {
+  final String?text;
+ final Function? onTab;
+  const SignUpWidget({super.key,  this.onTab, this.text});
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("Don’t have an account?",
-        style: AppTextStyle.smallerBold,
+        Text(
+          "Don’t have an account?",
+          style: AppTextStyle.smallerBold,
         ),
         GestureDetector(
-          child: Text("  Sign up",
-            style: AppTextStyle.smallerBold.copyWith(color: AppColors.secondary100),
+          onTap: () => onTab!(),
+          child: Text(
+            text??"  Sign up",
+            style: AppTextStyle.smallerBold.copyWith(
+              color: AppColors.secondary100,
+            ),
           ),
         ),
       ],
     );
-   }
+  }
 }
