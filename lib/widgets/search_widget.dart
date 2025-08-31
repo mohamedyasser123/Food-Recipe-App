@@ -67,7 +67,7 @@ class SearchWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.r),
                 color: AppColors.primary100,
               ),
-              child:SvgPicture.asset(AppImages.filter),
+              child:Icon(Icons.filter_alt,color: AppColors.white,),
             ))
       ],
     );

@@ -1,12 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:rec_app/providers/meal_provider.dart';
+import 'package:rec_app/services/meal_service.dart';
 
 import 'core/constants/app_colors.dart';
+import 'core/network/api_client.dart';
 import 'core/routes/app_router.dart';
 import 'core/routes/app_routes.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => MealProvider(
+             MealService(
+               ApiClient(client: http.Client()),
+            ),
+          ),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
